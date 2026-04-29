@@ -27,8 +27,6 @@ services:
       timeout: 5s
       start_period: 10s
       retries: 3
-    networks:
-      - t-loyalty-network
 
   frontend:
     build:
@@ -40,9 +38,9 @@ services:
       - "3000:80"
     depends_on:
       - backend
-    networks:
-      - t-loyalty-network
 
 networks:
-  t-loyalty-network:
-    name: t-loyalty-network
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
