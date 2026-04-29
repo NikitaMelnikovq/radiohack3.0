@@ -1,0 +1,7 @@
+partner_id,partner_name,short_description,logo_url,brand_color_hex,cashback_percent,financial_segment
+1,ЧистоБыстро,Клининговый сервис,https://example.com/logos/chisto-bystro.png,#2E86DE,7,HIGH
+2,AeroClub,Повышенный кэшбэк на путешествия,https://example.com/logos/aeroclub.png,#7D3C98,9,HIGH
+3,Еда рядом,Доставка продуктов и готовой еды,https://example.com/logos/eda-ryadom.png,#27AE60,5,LOW
+4,ДомМаркет,Товары для дома,https://example.com/logos/dommarket.png,#F39C12,6,MEDIUM
+5,LuxeTravel,Премиальные отели и туры,https://example.com/logos/luxetravel.png,#1F618D,12,HIGH
+6,КиноПлюс,Билеты в кино и подписки,https://example.com/logos/kinoplus.png,#C0392B,3,LOW

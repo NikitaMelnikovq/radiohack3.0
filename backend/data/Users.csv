@@ -1,0 +1,4 @@
+id,email,phone_number,full_name,financial_segment
+1,ivan.petrov@example.com,+79990000001,Иван Петров,HIGH
+2,anna.smirnova@example.com,+79990000002,Анна Смирнова,LOW
+3,oleg.ivanov@example.com,+79990000003,Олег Иванов,MEDIUM
