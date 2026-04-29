@@ -3,9 +3,6 @@ services:
     build:
       context: ./backend
     container_name: t-loyalty-backend
-    env_file:
-      - path: .env
-        required: false
     environment:
       SERVICE_NAME: ${SERVICE_NAME:-t-loyalty-backend}
       APP_TITLE: ${APP_TITLE:-T-Loyalty Backend Core}
