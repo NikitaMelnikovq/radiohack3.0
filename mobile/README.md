@@ -137,3 +137,17 @@ Windows:
 ```bat
 gradlew.bat assembleDebug
 ```
+
+Ожидаемый путь после debug-сборки:
+
+```text
+mobile/app/build/outputs/apk/debug/app-debug.apk
+```
+
+Рекомендуемый путь для демо-пакета в репозитории:
+
+```text
+docs/apk/t-loyalty-debug.apk
+```
+
+APK не требуется для Docker/CI backend+frontend и не собирается в основном CI workflow.

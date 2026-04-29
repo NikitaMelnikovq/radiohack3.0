@@ -1,5 +1,5 @@
 export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") || "http://127.0.0.1:8000";
+  (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/$/, "");
 
 export class ApiError extends Error {
   constructor(
@@ -13,7 +13,7 @@ export class ApiError extends Error {
 }
 
 export async function apiGet<T>(path: string, signal?: AbortSignal): Promise<T> {
-  const url = `${API_BASE_URL}${path}`;
+  const url = buildApiUrl(path);
 
   try {
     const response = await fetch(url, {
@@ -41,6 +41,16 @@ export async function apiGet<T>(path: string, signal?: AbortSignal): Promise<T> 
       `Не удалось подключиться к backend. Проверьте, что FastAPI запущен на ${API_BASE_URL}.`,
     );
   }
+}
+
+function buildApiUrl(path: string): string {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+
+  if (API_BASE_URL.endsWith("/api") && normalizedPath.startsWith("/api/")) {
+    return `${API_BASE_URL}${normalizedPath.slice("/api".length)}`;
+  }
+
+  return `${API_BASE_URL}${normalizedPath}`;
 }
 
 async function readErrorDetail(response: Response): Promise<string | undefined> {

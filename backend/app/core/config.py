@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     app_version: str = "0.1.0"
     api_prefix: str = "/api"
     data_dir: Path = Field(default_factory=lambda: BASE_DIR / "data")
-    cors_origins: list[str] = Field(default_factory=lambda: ["*"])
+    cors_origins: str | list[str] = Field(default_factory=lambda: ["*"])
 
     model_config = SettingsConfigDict(
         env_file=BASE_DIR / ".env",
@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     @field_validator("cors_origins", mode="before")
     @classmethod
     def parse_cors_origins(cls, value: Any) -> Any:
-        if isinstance(value, str) and not value.strip().startswith("["):
+        if isinstance(value, str):
             return [origin.strip() for origin in value.split(",") if origin.strip()]
         return value
 

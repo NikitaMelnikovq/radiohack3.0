@@ -82,6 +82,25 @@ http://127.0.0.1:8000/docs
 http://127.0.0.1:8000/openapi.json
 ```
 
+## Docker
+
+Backend входит в общий Docker Compose из корня проекта:
+
+```bash
+cd ..
+docker compose up --build
+```
+
+В контейнере сервис слушает `0.0.0.0:8000`, а frontend/nginx проксирует его как `/api`.
+
+Проверка через общий frontend host:
+
+```bash
+curl http://localhost:3000/api/health
+```
+
+Docker image использует `python:3.11-slim`, копирует `requirements.txt` отдельно от исходников для cache-friendly сборки и кладёт CSV из `backend/data` в `/app/data`.
+
 ## CSV-файлы
 
 По умолчанию сервис читает CSV из папки `backend/data/`.

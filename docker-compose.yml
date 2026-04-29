@@ -1,0 +1,48 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: t-loyalty-backend
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      SERVICE_NAME: ${SERVICE_NAME:-t-loyalty-backend}
+      APP_TITLE: ${APP_TITLE:-T-Loyalty Backend Core}
+      APP_VERSION: ${APP_VERSION:-0.1.0}
+      API_PREFIX: ${API_PREFIX:-/api}
+      DATA_DIR: ${DATA_DIR:-/app/data}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+    expose:
+      - "8000"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3).read()",
+        ]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    networks:
+      - t-loyalty-network
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api}
+    container_name: t-loyalty-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - t-loyalty-network
+
+networks:
+  t-loyalty-network:
+    name: t-loyalty-network

@@ -79,6 +79,20 @@ cp .env.example .env
 VITE_API_BASE_URL=http://127.0.0.1:8000
 ```
 
+Для local dev используйте прямой backend URL:
+
+```env
+VITE_API_BASE_URL=http://127.0.0.1:8000
+```
+
+Для Docker/prod build используется относительный URL через nginx proxy:
+
+```env
+VITE_API_BASE_URL=/api
+```
+
+Если переменная не задана, frontend использует безопасный default `/api`.
+
 ## Основные страницы
 
 - `/` — выбор демо-профиля.
@@ -108,6 +122,29 @@ Frontend использует существующий backend:
 ```bash
 npm run build
 npm run preview
+```
+
+## Docker
+
+Из корня проекта:
+
+```bash
+docker compose up --build
+```
+
+Frontend собирается multi-stage Dockerfile: `node:20-alpine` выполняет `npm ci` и `npm run build`, затем `nginx:alpine` отдаёт `dist`.
+
+Nginx:
+
+- отдаёт React SPA;
+- проксирует `/api` в backend service `backend:8000`;
+- проксирует `/docs` и `/openapi.json`;
+- поддерживает refresh на nested routes через `try_files`.
+
+Проверка:
+
+```bash
+curl http://localhost:3000/api/health
 ```
 
 ## Troubleshooting
