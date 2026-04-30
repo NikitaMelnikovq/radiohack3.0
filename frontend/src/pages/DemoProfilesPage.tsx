@@ -75,17 +75,7 @@ export function DemoProfilesPage() {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-5 flex-1">
-                    <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted">Сценарий показа</p>
-                    <div className="space-y-2">
-                      {profile.recommended_demo_flow.map((step) => (
-                        <div key={step} className="flex items-center gap-2 text-sm text-white/[0.72] light:text-black/70">
-                          <span className="h-1.5 w-1.5 rounded-full bg-t-yellow" />
-                          {step}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <div className="flex-1" />
                   <Button className="mt-6 w-full" icon={<ArrowRight className="h-5 w-5" aria-hidden />} onClick={() => openProfile(profile.user_id)}>
                     Открыть Мою выгоду
                   </Button>

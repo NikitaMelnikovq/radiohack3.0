@@ -49,7 +49,7 @@ export function AssistantPage() {
                 aria-expanded={isOpen}
               >
                 <div className="flex items-center justify-between gap-3">
-                  <span className="font-semibold">{item.question}</span>
+                  <span className="font-semibold">{localizeTechnicalText(item.question)}</span>
                   <ChevronDown className={cn("h-5 w-5 transition", isOpen && "rotate-180")} aria-hidden />
                 </div>
                 {isOpen ? <p className="mt-3 text-sm leading-6 text-muted">{localizeTechnicalText(item.answer)}</p> : null}
