@@ -65,19 +65,19 @@ export function DashboardPage() {
       <section>
         <SectionHeader
           title="Персональные офферы"
-          description="Три лучших предложения партнёров, отсортированные по проценту кэшбэка."
+          description="Лучшие предложения от партнёров"
           action={<Button variant="secondary" icon={<ArrowRight className="h-4 w-4" aria-hidden />}>Все офферы</Button>}
         />
         <OffersStack offers={dashboard.offers.offers} limit={3} />
       </section>
 
       <section>
-        <SectionHeader title="Следующие продукты экосистемы" description="Рекомендации по продуктам с понятным объяснением причин." />
+        <SectionHeader title="Рекомендуемые продукты экосистемы" description="Что ещё может приносить выгоду" />
         <CrossSellCards recommendations={dashboard.cross_sell.recommendations} limit={3} />
       </section>
 
       <section>
-        <SectionHeader title="AI-ассистент выгоды" description="Короткие инсайты по вашей истории лояльности без внешней нейросети." />
+        <SectionHeader title="AI-ассистент выгоды" description="Короткие инсайты по вашей истории лояльности" />
         <AiInsightsPanel insights={dashboard.ai_insights.insights} limit={3} />
       </section>
     </div>

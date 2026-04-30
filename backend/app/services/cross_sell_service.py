@@ -73,7 +73,7 @@ PRODUCT_CATALOG: dict[str, ProductDefinition] = {
         code="premium_cashback_categories",
         name="Повышенные категории cashback",
         category="ecosystem",
-        title="Усильте рублёвый cashback повышенными категориями",
+        title="Усильте рублёвый кэшбэк повышенными категориями",
         description="Если рублёвая выгода уже заметна, повышенные категории помогают увеличить результат в следующем месяце.",
         cta_label="Выбрать категории",
     ),
@@ -90,23 +90,23 @@ PRODUCT_CATALOG: dict[str, ProductDefinition] = {
         name="Premium",
         category="ecosystem",
         title="Получите больше преимуществ с Premium",
-        description="Высокий финансовый сегмент и активность в лояльности показывают хороший fit для премиального обслуживания.",
+        description="Сочетание высокого финансового статуса и активности в накоплении бонусов показывает, что вам  отлично подойдет премиальный сервис.",
         cta_label="Посмотреть Premium",
     ),
     "t_business": ProductDefinition(
         code="t_business",
         name="Т-Бизнес",
         category="ecosystem",
-        title="Оцените бизнес-продукты как следующий шаг",
-        description="Для HIGH-сегмента бизнес-продукты могут быть полезным расширением экосистемы рядом с личными финансами.",
+        title="Бизнес-продукты как следующий шаг",
+        description="Для клиентов с высоким финансовым статусом бизнес-продукты могут быть полезным расширением экосистемы.",
         cta_label="Посмотреть Т-Бизнес",
     ),
     "travel_benefits": ProductDefinition(
         code="travel_benefits",
         name="Travel benefits",
         category="ecosystem",
-        title="Усильте travel-выгоду и бонусы в поездках",
-        description="Мили и программа All Airlines показывают интерес к travel-сценариям, поэтому travel benefits могут дать дополнительную ценность.",
+        title="Поездки с выгодой",
+        description="Активное использование программы All Airlines совместно с дополнительными бонусами для путешественников может расширить вашу выгоду.",
         cta_label="Посмотреть travel-бонусы",
     ),
 }
@@ -287,7 +287,7 @@ class CrossSellService:
         if product_code == "all_airlines" and "All Airlines" in active_programs:
             return "Усильте использование All Airlines"
         if product_code == "black_card" and "Black" in active_programs:
-            return "Усильте регулярный cashback по Black"
+            return "Усильте регулярный кэшбэк по Black"
         return product.title
 
     def _reason_for_product(
@@ -298,7 +298,7 @@ class CrossSellService:
     ) -> str:
         if product_code == "all_airlines" and "All Airlines" in active_programs:
             return "Программа уже активна, поэтому рекомендация сфокусирована на усилении использования, а не на подключении с нуля."
-        return "Рекомендация основана на financial_segment, количестве счетов, активности по лояльности и структуре выплат."
+        return "Рекомендация основана на вашем финансовом статусе, количестве счетов, активности по лояльности и структуре выплат."
 
     def _evidence(
         self,

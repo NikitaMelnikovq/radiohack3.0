@@ -30,7 +30,7 @@ export function DemoProfilesPage() {
             <Badge className="border-t-yellow/30 bg-t-yellow/15 text-t-yellow light:border-black/10 light:bg-black/5 light:text-black/70">T-Loyalty Hub</Badge>
             <h1 className="mt-5 text-4xl font-black tracking-normal sm:text-5xl lg:text-6xl">Моя выгода от Т-Банка</h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/70 light:text-black/70 sm:text-lg">
-              Выберите демо-клиента и покажите жюри единый раздел лояльности: кэшбэк, мили, Браво, прогноз, офферы и персональные инсайты.
+              Выберите демо-клиента и просмотрите прототип от его лица: кэшбэк, мили, браво, прогноз, офферы и персональные инсайты.
             </p>
             {savedUserId ? (
               <Button className="mt-6" icon={<ArrowRight className="h-5 w-5" aria-hidden />} onClick={() => navigate(`/users/${savedUserId}/dashboard`)}>

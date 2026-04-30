@@ -151,7 +151,7 @@ class GamificationService:
                 LoyaltyChallenge(
                     challenge_id="activate_two_partner_offers",
                     title="Активируйте 2 партнёрских предложения",
-                    description="Выберите офферы с максимальным cashback_percent и проверьте прирост выгоды.",
+                    description="Выберите офферы с максимальным кэшбэком и проверьте прирост выгоды.",
                     reward_text="+500 баллов прогресса",
                     progress_percent=min(len(offers.offers) * 20, 80),
                     difficulty="easy",
