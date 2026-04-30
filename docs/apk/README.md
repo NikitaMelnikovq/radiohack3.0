@@ -1,22 +1,23 @@
-# APK artifacts
+# APK-файлы мобильного приложения
 
-APK is not committed by default.
+Здесь размещается собранный APK-файл Android-клиента для демонстрации и тестирования.
 
-Expected debug build path:
+APK — это установочный файл Android-приложения. Его можно установить на устройство или эмулятор для тестирования или показа работы мобильного клиента.
 
-```text
-mobile/app/build/outputs/apk/debug/app-debug.apk
-```
+Каждый участник или демонстратор может собрать свой APK локально.
 
-Recommended demo package path:
+После сборки debug-версии файл появится по пути: `mobile/app/build/outputs/apk/debug/app-debug.apk`
 
-```text
-docs/apk/t-loyalty-debug.apk
-```
+Для удобства демонстрации и передачи файла рекомендуется скопировать APK сюда: `docs/apk/t-loyalty-debug.apk`
 
-Build command:
+# Как собрать APK
 
-```bash
-cd mobile
-./gradlew assembleDebug
-```
+1. Перейдите в папку mobile:
+	 ```bash
+	 cd mobile
+	 ```
+2. Выполните команду сборки debug-версии:
+	 ```bash
+	 ./gradlew assembleDebug
+	 ```
+	 (или `gradlew.bat assembleDebug` на Windows)
