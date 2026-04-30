@@ -113,19 +113,19 @@ jobs:
               if [ -f .env.example ]; then
                 cp .env.example .env
               else
-                cat > .env <<'ENV'
-SERVICE_NAME=t-loyalty-backend
-APP_TITLE=T-Loyalty Backend Core
-APP_VERSION=0.1.0
-API_PREFIX=/api
-DATA_DIR=/app/data
-CORS_ORIGINS=http://localhost:3000
-VITE_API_BASE_URL=/api
-ENV
+                {
+                  printf '%s\n' 'SERVICE_NAME=t-loyalty-backend'
+                  printf '%s\n' 'APP_TITLE=T-Loyalty Backend Core'
+                  printf '%s\n' 'APP_VERSION=0.1.0'
+                  printf '%s\n' 'API_PREFIX=/api'
+                  printf '%s\n' 'DATA_DIR=/app/data'
+                  printf '%s\n' 'CORS_ORIGINS=http://localhost:3000'
+                  printf '%s\n' 'VITE_API_BASE_URL=/api'
+                } > .env
               fi
             fi
 
             docker compose up -d --build
             docker image prune -f
             docker compose ps
-REMOTE
+          REMOTE
