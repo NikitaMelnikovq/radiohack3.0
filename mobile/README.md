@@ -1,10 +1,7 @@
 # T-Loyalty Android
 
-Android demo app для хакатонного проекта T-Loyalty Hub / "Моя выгода".
 
-## Описание
-
-Приложение показывает мобильный сценарий выбора демо-пользователя и раздела "Моя выгода": dashboard, аналитику лояльности, персональные офферы, AI insights, "Путь выгоды" и cross-sell рекомендации. Данные загружаются из локального FastAPI backend.
+Демо-приложение для Android для хакатонного проекта T-Loyalty Hub «Моя выгода». Мобильное приложение реализует сценарий выбора демо-пользователя и отображения единого раздела лояльности банка. Пользователь видит свой дашборд, аналитику по программам лояльности, персональные офферы, AI-инсайты, «Путь выгоды» и рекомендации.
 
 ## Стек
 
@@ -18,16 +15,6 @@ Android demo app для хакатонного проекта T-Loyalty Hub / "�
 - Coil для `logo_url`
 - Gradle Kotlin DSL
 - minSdk 26, compileSdk/targetSdk 36
-
-## Архитектура
-
-Поток данных:
-
-```text
-Compose Screen -> ViewModel -> LoyaltyRepository -> Retrofit LoyaltyApi -> FastAPI backend
-```
-
-DI сделан вручную через `AppContainer`, без Hilt. DTO остаются в data layer, UI получает domain models.
 
 ## Как запустить backend
 
@@ -44,14 +31,6 @@ uvicorn app.main:app --reload
 curl http://127.0.0.1:8000/api/health
 curl http://127.0.0.1:8000/api/demo/profiles
 ```
-
-## Как открыть проект в Android Studio
-
-```text
-Open -> mobile
-```
-
-Если Gradle не видит Android SDK в терминале, задайте `ANDROID_HOME` или откройте проект из Android Studio.
 
 ## Base URL
 
@@ -100,30 +79,6 @@ Backend локальный и работает по HTTP. В `res/xml/network_se
 - Offers: `GET /api/users/{user_id}/offers`
 - Assistant: `GET /api/users/{user_id}/ai-insights`
 - Gamification: `GET /api/users/{user_id}/gamification`
-
-Dashboard использует один агрегированный endpoint и не делает лишние запросы за блоками, которые уже есть в ответе.
-
-## Troubleshooting
-
-### Backend unavailable
-
-Проверьте, что FastAPI запущен:
-
-```bash
-curl http://127.0.0.1:8000/api/health
-```
-
-### Wrong baseUrl
-
-Для Android Emulator нужен `http://10.0.2.2:8000`, а не `http://127.0.0.1:8000`.
-
-### Cleartext HTTP blocked
-
-Проверьте `app/src/main/res/xml/network_security_config.xml`. Для реального устройства добавьте IP компьютера в локальной сети.
-
-### Emulator cannot use 127.0.0.1
-
-`127.0.0.1` внутри эмулятора означает сам Android Emulator. Хост-машина доступна как `10.0.2.2`.
 
 ## Debug APK
 
