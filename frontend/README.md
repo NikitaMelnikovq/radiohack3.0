@@ -1,6 +1,6 @@
 # T-Loyalty Frontend
 
-Web-приложение для хакатонного проекта T-Loyalty Hub / «Моя выгода». Показывает единый раздел лояльности банка: cashback, мили, Браво, офферы, прогноз, cross-sell рекомендации, AI insights и игровой путь выгоды.
+Веб-клиент для хакатонного проекта T-Loyalty Hub / «Моя выгода». Приложение реализует единый раздел лояльности банка, где пользователь видит всю свою выгоду: кэшбэк (рубли), мили, баллы «Браво», персональные офферы, прогноз начислений, рекомендации, AI-инсайты в едином интерфейсе.
 
 ## Стек
 
@@ -96,10 +96,10 @@ VITE_API_BASE_URL=/api
 ## Основные страницы
 
 - `/` — выбор демо-профиля.
-- `/users/:userId/dashboard` — главный dashboard «Моя выгода».
+- `/users/:userId/dashboard` — главный дашборд «Моя выгода».
 - `/users/:userId/analytics` — графики и аналитика.
 - `/users/:userId/offers` — персональные офферы.
-- `/users/:userId/assistant` — rule-based AI Loyalty Assistant.
+- `/users/:userId/assistant` — AI ассистент.
 - `/users/:userId/gamification` — «Путь выгоды».
 
 ## API endpoints
@@ -114,8 +114,6 @@ Frontend использует существующий backend:
 - `GET /api/users/{user_id}/gamification`
 - `GET /api/users/{user_id}/cross-sell`
 - `GET /api/users/{user_id}/missed-benefit`
-
-Главный dashboard использует `GET /api/users/{user_id}/dashboard`, чтобы не делать много запросов.
 
 ## Production build
 
@@ -146,35 +144,3 @@ Nginx:
 ```bash
 curl http://localhost:3000/api/health
 ```
-
-## Troubleshooting
-
-### Backend not available
-
-Если frontend показывает ошибку подключения:
-
-```text
-Не удалось подключиться к backend
-```
-
-Проверьте, что FastAPI запущен:
-
-```bash
-cd backend
-uvicorn app.main:app --reload
-curl http://127.0.0.1:8000/api/health
-```
-
-### CORS
-
-Backend уже настроен с CORS middleware. Если меняете порт или host, проверьте `VITE_API_BASE_URL` и backend CORS settings.
-
-### Wrong VITE_API_BASE_URL
-
-Если backend запущен не на `8000`, укажите правильный URL:
-
-```env
-VITE_API_BASE_URL=http://127.0.0.1:8010
-```
-
-После изменения `.env` перезапустите `npm run dev`.
