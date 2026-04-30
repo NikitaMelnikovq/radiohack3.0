@@ -96,7 +96,7 @@ class AIInsightsService:
             priority=1,
             title=f"Сделайте упор на {best_program.loyalty_program}",
             description="Эта программа принесла вам больше всего выгоды среди активных программ.",
-            reason=f"{best_program.loyalty_program} является самой выгодной программой по сумме cashback_amount.",
+            reason=f"{best_program.loyalty_program} является самой выгодной программой по сумме выплат.",
             evidence=[
                 f"Лучшая программа: {best_program.loyalty_program}",
                 f"Валюта: {best_program.currency}",
@@ -122,7 +122,7 @@ class AIInsightsService:
             priority=2,
             title="Прогноз построен по среднему за последние месяцы",
             description="Ожидаемая выгода рассчитана отдельно по каждой валюте без конвертации.",
-            reason="Forecast service использует explainable average_last_3_months на истории выплат пользователя.",
+            reason="Сервис прогнозов использует среднее значение выплат за последние 3 месяца.",
             evidence=evidence,
             confidence=confidence,
             cta_label="Посмотреть прогноз",
@@ -135,7 +135,7 @@ class AIInsightsService:
             type="optimization",
             priority=3,
             title=f"Начните с оффера {top_offer.partner_name}",
-            description="Это самый высокий cashback_percent среди предложений вашего сегмента.",
+            description="Это самый высокий процент кэшбэка среди предложений вашего сегмента.",
             reason="Офферы фильтруются по financial_segment и сортируются по cashback_percent.",
             evidence=[
                 f"Сегмент пользователя: {offers.user_segment}",

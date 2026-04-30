@@ -142,12 +142,12 @@ class DemoService:
 
     def _description(self, candidate: DemoCandidate) -> str:
         if candidate.user.financial_segment == "HIGH":
-            return "HIGH-сегмент, активная история и хороший кандидат для Premium, Investments и travel benefits."
+            return "Активный пользователь с хорошей историей, потенциальный пользователь премиальных, инвестиционных и travel бонусов."
         if candidate.user.financial_segment == "MEDIUM":
-            return "MEDIUM-сегмент, подходит для демонстрации next best action и роста выгоды."
+            return "Подходит для демонстрации роста выгоды и рекомендаций."
         if candidate.summary.total_transactions == 0:
             return "Пользователь с небольшой историей, удобен для демонстрации стартовых рекомендаций."
-        return "LOW-сегмент с базовыми программами и персональными офферами."
+        return "Пользователь с базовыми программами и персональными офферами."
 
     def _highlight_metrics(self, candidate: DemoCandidate) -> list[str]:
         metrics = [
