@@ -1,45 +1,37 @@
-# T-Loyalty Hub / Моя выгода
+# T-Loyalty Hub «Моя выгода»
 
 ## Описание
 
-T-Loyalty Hub / «Моя выгода» — хакатонный проект единого раздела лояльности банка. Он показывает выгоду по рублям, милям и Браво, аналитику, прогноз, персональные офферы, cross-sell рекомендации, rule-based AI insights и gamification.
+T-Loyalty Hub «Моя выгода» — это прототип единого раздела лояльности для клиентов банка, созданный в рамках хакатона. Проект объединяет все механики лояльности банка в одном месте и делает выгоды для пользователя прозрачными и наглядными.
 
-## Архитектура
+## Команда
 
-Стек проекта:
+**RTF Wizards**
+Мы студенты 3 курса ИРИТ-РТФ (УрФУ).
+
+## Стек проекта
 
 - Backend: FastAPI.
 - Frontend: React + Vite + TypeScript.
 - Mobile: Android + Kotlin.
 - Data layer: CSV-файлы в `backend/data`.
 
-Поток данных:
-
-```text
-User
- -> Frontend React / Android
- -> Backend FastAPI
- -> CSV repositories
- -> Business services
- -> Dashboard API
-```
-
 ## Компоненты
 
-- `backend/` — FastAPI API и бизнес-сервисы.
-- `frontend/` — React web client.
-- `mobile/` — Android/Kotlin client, не контейнеризируется.
-- `docs/` — инструкции, screenshots и место для APK.
-- `docker-compose.yml` — запуск web + backend одной командой.
+- `backend/` — серверная часть на FastAPI: реализует бизнес-логику, API, обработку данных лояльности, аналитику, прогнозы, персональные офферы и AI-инсайты.
+- `frontend/` — веб-клиент на React + Vite: пользовательский интерфейс для просмотра выгод, аналитики, предложений и выбора демо-пользователя.
+- `mobile/` — мобильное приложение на Android/Kotlin: отдельный клиент для доступа к разделу лояльности с мобильных устройств.
+- `docs/` — документация по проекту.
+- `docker-compose.yml` — конфигурация для одновременного запуска backend и frontend в Docker, обеспечивает быструю сборку.
 
 ## Требования
 
 - Docker и Docker Compose plugin.
-- Node.js 20, если нужен local frontend dev.
-- Python 3.11, если нужен local backend dev.
-- Android Studio, если нужен mobile build.
+- Node.js 20.
+- Python 3.11.
+- Android Studio.
 
-## Быстрый запуск через Docker
+## Быстрый запуск (Docker)
 
 `.env` опционален для запуска, но рекомендуется для явной конфигурации:
 
@@ -76,7 +68,7 @@ docker compose logs -f frontend
 docker compose ps
 ```
 
-## Локальный запуск без Docker
+## Локальный запуск
 
 Backend:
 
@@ -136,31 +128,7 @@ VITE_API_BASE_URL=/api
 - `GET /api/users/{user_id}/gamification`
 - `GET /api/users/{user_id}/missed-benefit`
 
-## Фичи
-
-- выбор демо-пользователя;
-- выгода по валютам;
-- аналитика по месяцам и программам;
-- explainable forecast;
-- офферы по `financial_segment`;
-- cross-sell рекомендации;
-- rule-based AI insights;
-- gamification;
-- dashboard score;
-- missed benefit.
-
-## Упрощения
-
-- данные читаются из CSV;
-- валюты не конвертируются;
-- прогноз использует explainable average, не ML;
-- AI insights rule-based, без внешнего LLM;
-- dashboard score — engagement/loyalty score, не кредитный скоринг;
-- офферы не активируются реально.
-
-## Mobile / APK
-
-Android-клиент находится в `mobile/`.
+## Mobile (APK)
 
 Debug APK после сборки:
 
@@ -186,8 +154,6 @@ Windows:
 ```bat
 gradlew.bat assembleDebug
 ```
-
-На момент упаковки APK в репозитории не найден. Для демо можно собрать `app-debug.apk` и положить копию в `docs/apk/t-loyalty-debug.apk`.
 
 ## Тесты
 
@@ -224,54 +190,4 @@ docker compose build
 
 `.github/workflows/deploy.example.yml` — безопасный шаблон деплоя на сервер через SSH. Он запускается вручную через `workflow_dispatch`. Если нужен автодеплой из `main`, раскомментируйте блок `push` в workflow.
 
-Secrets для деплоя:
-
-- `SERVER_HOST`
-- `SERVER_USER`
-- `SERVER_SSH_KEY`
-- `SERVER_PORT`
-- `DEPLOY_PATH`
-
-Third-party deploy action не используется: workflow вызывает `ssh` из shell. Приватные ключи нельзя хранить в репозитории.
-
-## Деплой на сервер через Docker Compose
-
-Общий сценарий:
-
-1. Подготовить сервер.
-2. Установить Docker и Docker Compose plugin.
-3. Склонировать репозиторий в `/opt/t-loyalty-hub`.
-4. Создать `.env`.
-5. Запустить `docker compose up -d --build`.
-6. Настроить reverse proxy/Nginx, если нужен домен.
-7. Открыть порт `3000` или проксировать на `80/443`.
-
-Команды:
-
-```bash
-sudo mkdir -p /opt/t-loyalty-hub
-sudo chown $USER:$USER /opt/t-loyalty-hub
-cd /opt/t-loyalty-hub
-git clone <repo-url> .
-cp .env.example .env
-docker compose up -d --build
-```
-
-Проверка:
-
-```bash
-docker compose ps
-curl http://localhost:3000/api/health
-```
-
-Подробная инструкция: `docs/DEPLOYMENT.md`.
-
-## Troubleshooting
-
-- Frontend не видит backend: проверьте, что Docker/prod build использует `VITE_API_BASE_URL=/api`.
-- `127.0.0.1:8000` в production build: пересоберите frontend через `docker compose build frontend`.
-- CORS: для Docker frontend ходит через nginx same-origin `/api`; для local dev проверьте `CORS_ORIGINS`.
-- Port already in use: освободите `3000` или измените mapping в `docker-compose.yml`.
-- Docker daemon not running: запустите Docker и проверьте права пользователя.
-- CSV files not found: в контейнере должен быть `DATA_DIR=/app/data`, CSV лежат в `backend/data`.
-- Android Emulator: используйте backend URL `http://10.0.2.2:8000`, а не `127.0.0.1`.
+Секреты для деплоя: `SERVER_HOST`, `SERVER_USER`, `SERVER_SSH_KEY`, `SERVER_PORT`, `DEPLOY_PATH`.
