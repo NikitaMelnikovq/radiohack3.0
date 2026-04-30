@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
-import { useOutletContext } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 import type { DashboardOutletContext } from "../components/layout/AppShell";
 import { DashboardSkeleton } from "../components/ui/Skeleton";
 import { ErrorState } from "../components/ui/ErrorState";
@@ -17,7 +18,16 @@ import { AiInsightsPanel } from "../components/loyalty/AiInsightsPanel";
 import { GamificationPanel } from "../components/loyalty/GamificationPanel";
 
 export function DashboardPage() {
+  const location = useLocation();
   const { dashboard, isLoading, error, refetch } = useOutletContext<DashboardOutletContext>();
+
+  useEffect(() => {
+    if (location.hash === "#expected-benefit") {
+      requestAnimationFrame(() => {
+        document.getElementById("expected-benefit")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  }, [location.hash, dashboard]);
 
   if (isLoading) {
     return <DashboardSkeleton />;
@@ -58,7 +68,9 @@ export function DashboardPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <ForecastCard forecast={dashboard.forecast} />
+        <div id="expected-benefit" className="scroll-mt-6">
+          <ForecastCard forecast={dashboard.forecast} />
+        </div>
         <GamificationPanel gamification={dashboard.gamification} compact />
       </div>
 

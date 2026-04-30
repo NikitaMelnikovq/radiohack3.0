@@ -1,4 +1,5 @@
 import type { AIInsight } from "../../api/types";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getConfidenceLabel, getTechnicalLabel, localizeTechnicalText } from "../../lib/formatters";
 import { confidenceBadgeClass } from "../../lib/segment";
 import { Badge } from "../ui/Badge";
@@ -7,7 +8,34 @@ import { Card } from "../ui/Card";
 import { EvidenceList } from "./EvidenceList";
 
 export function AiInsightsPanel({ insights, limit }: { insights: AIInsight[]; limit?: number }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { userId } = useParams<{ userId: string }>();
   const visibleInsights = typeof limit === "number" ? insights.slice(0, limit) : insights;
+
+  function handleInsightAction(insight: AIInsight) {
+    if (!userId) {
+      return;
+    }
+
+    if (insight.insight_id === "best_program_focus") {
+      navigate(`/users/${userId}/analytics`);
+      return;
+    }
+
+    if (insight.insight_id === "forecast_explanation") {
+      if (location.pathname.endsWith("/dashboard")) {
+        document.getElementById("expected-benefit")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+      navigate(`/users/${userId}/dashboard#expected-benefit`);
+      return;
+    }
+
+    if (insight.insight_id === "offer_activation_tip" || insight.insight_id === "segment_explanation") {
+      navigate(`/users/${userId}/offers`);
+    }
+  }
 
   return (
     <div className="grid gap-3 lg:grid-cols-3">
@@ -23,7 +51,7 @@ export function AiInsightsPanel({ insights, limit }: { insights: AIInsight[]; li
           <div className="mt-4 flex-1">
             <EvidenceList evidence={insight.evidence} />
           </div>
-          <Button className="mt-5 w-full" variant="secondary" type="button">
+          <Button className="mt-5 w-full" variant="secondary" type="button" onClick={() => handleInsightAction(insight)}>
             {insight.cta_label}
           </Button>
         </Card>
