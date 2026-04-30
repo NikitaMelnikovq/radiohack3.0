@@ -1,0 +1,70 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - CI
+    branches:
+      - main
+    types:
+      - completed
+
+jobs:
+  deploy:
+    name: Deploy over SSH
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Configure SSH key and deploy
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${SERVER_HOST}" ] || [ -z "${SERVER_USER}" ] || [ -z "${SERVER_SSH_KEY}" ]; then
+            echo "SERVER_HOST, SERVER_USER and SERVER_SSH_KEY secrets are required."
+            exit 1
+          fi
+
+          mkdir -p ~/.ssh
+          printf '%s\n' "${SERVER_SSH_KEY}" > ~/.ssh/t-loyalty-deploy
+          chmod 600 ~/.ssh/t-loyalty-deploy
+
+          SERVER_PORT="${SERVER_PORT:-22}"
+          ssh-keyscan -p "${SERVER_PORT}" "${SERVER_HOST}" >> ~/.ssh/known_hosts
+
+          DEPLOY_PATH="${DEPLOY_PATH:-/opt/t-loyalty-hub}"
+          REMOTE_DEPLOY_PATH="$(printf '%q' "${DEPLOY_PATH}")"
+
+          ssh -i ~/.ssh/t-loyalty-deploy -p "${SERVER_PORT}" "${SERVER_USER}@${SERVER_HOST}" "DEPLOY_PATH=${REMOTE_DEPLOY_PATH} bash -s" <<'REMOTE'
+            set -euo pipefail
+
+            cd "${DEPLOY_PATH}"
+            git fetch origin main
+            git reset --hard origin/main
+
+            if [ ! -f .env ]; then
+              if [ -f .env.example ]; then
+                cp .env.example .env
+              else
+                cat > .env <<'ENV'
+SERVICE_NAME=t-loyalty-backend
+APP_TITLE=T-Loyalty Backend Core
+APP_VERSION=0.1.0
+API_PREFIX=/api
+DATA_DIR=/app/data
+CORS_ORIGINS=http://localhost:3000
+VITE_API_BASE_URL=/api
+ENV
+              fi
+            fi
+
+            docker compose up -d --build
+            docker image prune -f
+            docker compose ps
+REMOTE
