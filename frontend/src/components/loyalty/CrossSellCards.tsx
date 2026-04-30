@@ -1,4 +1,5 @@
 import type { CrossSellRecommendation } from "../../api/types";
+import { localizeTechnicalText } from "../../lib/formatters";
 import { Button } from "../ui/Button";
 import { Card } from "../ui/Card";
 import { EvidenceList } from "./EvidenceList";
@@ -15,8 +16,8 @@ export function CrossSellCards({ recommendations, limit }: { recommendations: Cr
             <div className="rounded-full bg-t-yellow px-3 py-1 text-sm font-black text-black">{recommendation.score}</div>
           </div>
           <h3 className="text-lg font-bold">{recommendation.title}</h3>
-          <p className="mt-3 flex-1 text-sm leading-6 text-muted">{recommendation.description}</p>
-          <p className="mt-4 text-xs leading-5 text-muted">{recommendation.reason}</p>
+          <p className="mt-3 flex-1 text-sm leading-6 text-muted">{localizeTechnicalText(recommendation.description)}</p>
+          <p className="mt-4 text-xs leading-5 text-muted">{localizeTechnicalText(recommendation.reason)}</p>
           <div className="mt-4">
             <EvidenceList evidence={recommendation.evidence} limit={3} />
           </div>

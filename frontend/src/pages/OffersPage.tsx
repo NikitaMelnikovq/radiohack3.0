@@ -23,7 +23,7 @@ export function OffersPage() {
     <div className="space-y-6">
       <SectionHeader
         title="Офферы партнёров"
-        description="Подборка соответствует financial_segment пользователя. Порядок сохраняет backend-сортировку по cashback_percent."
+        description="Подборка соответствует финансовому сегменту пользователя. Сначала показаны офферы с самым высоким кэшбэком."
         action={<Badge className={segmentBadgeClass(dashboard.offers.user_segment)}>{getSegmentLabel(dashboard.offers.user_segment)}</Badge>}
       />
       <OffersStack offers={dashboard.offers.offers} />

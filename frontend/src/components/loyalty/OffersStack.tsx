@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Offer } from "../../api/types";
-import { formatPercent } from "../../lib/formatters";
+import { formatPercent, localizeTechnicalText } from "../../lib/formatters";
 import { Button } from "../ui/Button";
 import { Card } from "../ui/Card";
 import { EmptyState } from "../ui/EmptyState";
@@ -28,13 +28,13 @@ export function OffersStack({ offers, limit }: OffersStackProps) {
               <div className="min-w-0">
                 <h3 className="text-lg font-bold">{offer.partner_name}</h3>
                 <p className="mt-1 text-sm leading-6 text-muted">{offer.short_description}</p>
-                <p className="mt-2 text-xs leading-5 text-muted">{offer.reason}</p>
+                <p className="mt-2 text-xs leading-5 text-muted">{localizeTechnicalText(offer.reason)}</p>
               </div>
             </div>
             <div className="flex shrink-0 items-center justify-between gap-4 sm:flex-col sm:items-end">
               <div className="text-right">
                 <div className="text-3xl font-black text-t-yellow">{formatPercent(offer.cashback_percent)}</div>
-                <p className="text-xs text-muted">cashback</p>
+                <p className="text-xs text-muted">кэшбэк</p>
               </div>
               <Button type="button">Активировать</Button>
             </div>

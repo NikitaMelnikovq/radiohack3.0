@@ -7,6 +7,7 @@ import { DashboardSkeleton } from "../components/ui/Skeleton";
 import { MetricCard } from "../components/ui/MetricCard";
 import { SectionHeader } from "../components/ui/SectionHeader";
 import { formatCurrencyAmount } from "../lib/formatters";
+import { getCurrencyLabel } from "../lib/currency";
 
 export function AnalyticsPage() {
   const { dashboard, isLoading, error, refetch } = useOutletContext<DashboardOutletContext>();
@@ -21,7 +22,7 @@ export function AnalyticsPage() {
 
   return (
     <div className="space-y-6">
-      <SectionHeader title="Аналитика выгоды" description="Динамика выплат, вклад программ и средний cashback по валютам." />
+      <SectionHeader title="Аналитика выгоды" description="Динамика выплат, вклад программ и средний кэшбэк по валютам." />
       <div className="grid gap-4 xl:grid-cols-2">
         <MonthlyDynamicsChart items={dashboard.analytics.monthly_dynamics} />
         <ProgramBreakdownChart items={dashboard.analytics.program_breakdown} />
@@ -39,7 +40,7 @@ export function AnalyticsPage() {
         {dashboard.analytics.average_monthly_cashback.map((item) => (
           <MetricCard
             key={item.currency}
-            label={`Среднее в месяц: ${item.currency}`}
+            label={`Среднее в месяц: ${getCurrencyLabel(item.currency)}`}
             value={formatCurrencyAmount(item.currency, item.amount)}
           />
         ))}

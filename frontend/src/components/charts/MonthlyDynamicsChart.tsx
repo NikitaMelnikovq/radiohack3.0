@@ -20,7 +20,7 @@ interface ChartRow {
 
 export function MonthlyDynamicsChart({ items }: { items: MonthlyDynamicItem[] }) {
   if (!items.length) {
-    return <EmptyState title="Нет динамики" description="График появится после первых выплат cashback." />;
+    return <EmptyState title="Нет динамики" description="График появится после первых выплат кэшбэка." />;
   }
 
   const currencies = Array.from(new Set(items.map((item) => item.currency)));
@@ -44,11 +44,14 @@ export function MonthlyDynamicsChart({ items }: { items: MonthlyDynamicItem[] })
           <YAxis stroke="rgba(255,255,255,0.45)" tickLine={false} axisLine={false} />
           <Tooltip
             contentStyle={{
-              background: "#151518",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 18,
-              color: "#fff",
+              background: "var(--chart-tooltip-bg)",
+              border: "1px solid var(--chart-tooltip-border)",
+              borderRadius: 14,
+              color: "var(--chart-tooltip-text)",
+              boxShadow: "var(--chart-tooltip-shadow)",
             }}
+            itemStyle={{ color: "var(--chart-tooltip-text)" }}
+            labelStyle={{ color: "var(--chart-tooltip-text)" }}
             formatter={(value, name) => [formatCurrencyAmount(String(name), Number(value)), getCurrencyLabel(String(name))]}
           />
           {currencies.map((currency) => (

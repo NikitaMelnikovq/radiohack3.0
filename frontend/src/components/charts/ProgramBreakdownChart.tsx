@@ -23,11 +23,14 @@ export function ProgramBreakdownChart({ items }: { items: ProgramBreakdownItem[]
             </Pie>
             <Tooltip
               contentStyle={{
-                background: "#151518",
-                border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: 18,
-                color: "#fff",
+                background: "var(--chart-tooltip-bg)",
+                border: "1px solid var(--chart-tooltip-border)",
+                borderRadius: 14,
+                color: "var(--chart-tooltip-text)",
+                boxShadow: "var(--chart-tooltip-shadow)",
               }}
+              itemStyle={{ color: "var(--chart-tooltip-text)" }}
+              labelStyle={{ color: "var(--chart-tooltip-text)" }}
               formatter={(value, _, entry) => {
                 const item = entry.payload as ProgramBreakdownItem;
                 return [formatCurrencyAmount(item.currency, Number(value)), item.loyalty_program];

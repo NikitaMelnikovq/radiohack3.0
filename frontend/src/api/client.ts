@@ -26,7 +26,7 @@ export async function apiGet<T>(path: string, signal?: AbortSignal): Promise<T> 
 
     if (!response.ok) {
       const detail = await readErrorDetail(response);
-      throw new ApiError(detail || `Backend вернул HTTP ${response.status}`, response.status, detail);
+      throw new ApiError(detail || `Сервис вернул HTTP ${response.status}`, response.status, detail);
     }
 
     return (await response.json()) as T;
@@ -38,7 +38,7 @@ export async function apiGet<T>(path: string, signal?: AbortSignal): Promise<T> 
       throw error;
     }
     throw new ApiError(
-      `Не удалось подключиться к backend. Проверьте, что FastAPI запущен на ${API_BASE_URL}.`,
+      `Не удалось подключиться к сервису данных. Проверьте, что FastAPI запущен на ${API_BASE_URL}.`,
     );
   }
 }

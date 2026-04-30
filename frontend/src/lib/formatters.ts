@@ -1,4 +1,5 @@
 import type { Confidence, CurrencyCode, FinancialSegment } from "../api/types";
+import { getCurrencyLabel } from "./currency";
 
 const ruNumber = new Intl.NumberFormat("ru-RU", {
   maximumFractionDigits: 0,
@@ -89,6 +90,60 @@ export function getConfidenceLabel(confidence?: Confidence | string): string {
     return "высокая";
   }
   return "—";
+}
+
+const technicalLabels: Record<string, string> = {
+  average_last_3_months: "среднее за последние 3 месяца",
+  rule_based_ai_insights: "инсайты по правилам",
+  average_monthly_cashback_uplift: "потенциал от среднего кэшбэка",
+  optimization: "оптимизация",
+  explanation: "объяснение",
+  forecast: "прогноз",
+  cross_sell: "следующий продукт",
+  risk: "риск",
+  gamification: "прогресс",
+  easy: "легко",
+  medium: "средне",
+  hard: "сложно",
+  LOW: "стартовый",
+  MEDIUM: "средний",
+  HIGH: "премиальный",
+};
+
+export function getTechnicalLabel(value?: string | null): string {
+  if (!value) {
+    return "—";
+  }
+  return technicalLabels[value] ?? getCurrencyLabel(value);
+}
+
+export function localizeTechnicalText(value: string): string {
+  return [
+    ["cashback_percent", "проценту кэшбэка"],
+    ["cashback_amount", "сумме выплат"],
+    ["financial_segment", "финансовому сегменту"],
+    ["average_monthly_cashback", "среднего месячного кэшбэка"],
+    ["total_cashback_value", "накопленную выгоду"],
+    ["loyalty points", "баллы выгоды"],
+    ["Forecast service", "Сервис прогноза"],
+    ["Offers service", "Сервис офферов"],
+    ["Gamification service", "Сервис прогресса"],
+    ["Missed benefit", "Потенциальная выгода"],
+    ["Product score", "Оценка продукта"],
+    ["Cashback", "Кэшбэк"],
+    ["cashback", "кэшбэк"],
+    ["score", "оценку"],
+    ["average_last_3_months", "среднее за последние 3 месяца"],
+    ["rule_based_ai_insights", "инсайты по правилам"],
+    ["explainable", "объяснимое"],
+    ["uplift", "прирост"],
+    ["LOW", "стартовый"],
+    ["MEDIUM", "средний"],
+    ["HIGH", "премиальный"],
+    ["rub", "рубли"],
+    ["miles", "мили"],
+    ["bravo-points", "Браво"],
+  ].reduce((text, [from, to]) => text.split(from).join(to), value);
 }
 
 function isFiniteNumber(value: unknown): value is number {

@@ -1,5 +1,6 @@
 import type { LoyaltyForecast } from "../../api/types";
-import { formatCurrencyAmount, getConfidenceLabel } from "../../lib/formatters";
+import { formatCurrencyAmount, getConfidenceLabel, getTechnicalLabel } from "../../lib/formatters";
+import { getCurrencyLabel } from "../../lib/currency";
 import { confidenceBadgeClass } from "../../lib/segment";
 import { Badge } from "../ui/Badge";
 import { Card } from "../ui/Card";
@@ -17,7 +18,7 @@ export function ForecastCard({ forecast }: { forecast: LoyaltyForecast }) {
           <p className="text-sm text-muted">Прогноз на {forecast.forecast_period_days} дней</p>
           <h3 className="mt-2 text-xl font-bold">Ожидаемая выгода</h3>
         </div>
-        <Badge>{forecast.method}</Badge>
+        <Badge>{getTechnicalLabel(forecast.method)}</Badge>
       </div>
       <div className="mt-5 grid gap-3">
         {forecast.items.map((item) => (
@@ -26,7 +27,7 @@ export function ForecastCard({ forecast }: { forecast: LoyaltyForecast }) {
               <div className="text-xl font-black">{formatCurrencyAmount(item.currency, item.predicted_amount)}</div>
               <Badge className={confidenceBadgeClass(item.confidence)}>{getConfidenceLabel(item.confidence)}</Badge>
             </div>
-            <p className="mt-1 text-sm text-muted">{item.currency}</p>
+            <p className="mt-1 text-sm text-muted">{getCurrencyLabel(item.currency)}</p>
           </div>
         ))}
       </div>

@@ -1,0 +1,17 @@
+.git
+.github
+.idea
+**/.idea
+**/__pycache__
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+**/.venv
+**/venv
+**/.env
+**/node_modules
+**/dist
+**/build
+mobile/.gradle
+mobile/app/build
+*.log
