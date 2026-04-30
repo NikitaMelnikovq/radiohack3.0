@@ -25,11 +25,11 @@ export function DemoProfilesPage() {
   return (
     <main className="min-h-screen px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <section className="mb-8 overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,#0B0B0C_0%,#17171A_54%,#292409_100%)] p-6 shadow-soft sm:p-8 lg:p-10">
+        <section className="mb-8 overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,#0B0B0C_0%,#17171A_54%,#292409_100%)] p-6 text-white shadow-soft light:border-black/10 light:!bg-white light:text-black sm:p-8 lg:p-10">
           <div className="max-w-3xl">
-            <Badge className="border-t-yellow/30 bg-t-yellow/15 text-t-yellow">T-Loyalty Hub</Badge>
+            <Badge className="border-t-yellow/30 bg-t-yellow/15 text-t-yellow light:border-black/10 light:bg-black/5 light:text-black/70">T-Loyalty Hub</Badge>
             <h1 className="mt-5 text-4xl font-black tracking-normal sm:text-5xl lg:text-6xl">Моя выгода от Т-Банка</h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-white/70 sm:text-lg">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-white/70 light:text-black/70 sm:text-lg">
               Выберите демо-клиента и покажите жюри единый раздел лояльности: кэшбэк, мили, Браво, прогноз, офферы и персональные инсайты.
             </p>
             {savedUserId ? (
