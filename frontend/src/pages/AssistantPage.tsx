@@ -9,6 +9,7 @@ import { ErrorState } from "../components/ui/ErrorState";
 import { DashboardSkeleton } from "../components/ui/Skeleton";
 import { SectionHeader } from "../components/ui/SectionHeader";
 import { cn } from "../lib/cn";
+import { getTechnicalLabel, localizeTechnicalText } from "../lib/formatters";
 
 export function AssistantPage() {
   const { dashboard, isLoading, error, refetch } = useOutletContext<DashboardOutletContext>();
@@ -26,8 +27,8 @@ export function AssistantPage() {
     <div className="space-y-6">
       <SectionHeader
         title="AI-ассистент выгоды"
-        description="Инсайты рассчитаны по вашей истории лояльности и офферам. Это rule-based logic, без внешней нейросети."
-        action={<Badge className="border-t-yellow/30 bg-t-yellow/15 text-t-yellow">{dashboard.ai_insights.method}</Badge>}
+        description="Инсайты рассчитаны по вашей истории лояльности и офферам без внешней нейросети."
+        action={<Badge className="border-t-yellow/30 bg-t-yellow/15 text-t-yellow">{getTechnicalLabel(dashboard.ai_insights.method)}</Badge>}
       />
       <Card>
         <h2 className="text-2xl font-black">{dashboard.ai_insights.title}</h2>
@@ -51,7 +52,7 @@ export function AssistantPage() {
                   <span className="font-semibold">{item.question}</span>
                   <ChevronDown className={cn("h-5 w-5 transition", isOpen && "rotate-180")} aria-hidden />
                 </div>
-                {isOpen ? <p className="mt-3 text-sm leading-6 text-muted">{item.answer}</p> : null}
+                {isOpen ? <p className="mt-3 text-sm leading-6 text-muted">{localizeTechnicalText(item.answer)}</p> : null}
               </button>
             );
           })}

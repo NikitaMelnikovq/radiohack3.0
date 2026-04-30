@@ -1,4 +1,5 @@
 import type { GamificationResponse } from "../../api/types";
+import { getTechnicalLabel } from "../../lib/formatters";
 import { Progress } from "../ui/Progress";
 import { Card } from "../ui/Card";
 import { Badge } from "../ui/Badge";
@@ -43,7 +44,7 @@ export function GamificationPanel({ gamification, compact = false }: Gamificatio
                 <h3 className="font-bold">{challenge.title}</h3>
                 <p className="mt-1 text-sm leading-6 text-muted">{challenge.description}</p>
               </div>
-              <Badge>{challenge.difficulty}</Badge>
+              <Badge>{getTechnicalLabel(challenge.difficulty)}</Badge>
             </div>
             <Progress value={challenge.progress_percent} ariaLabel={challenge.title} />
             <p className="mt-3 text-sm font-semibold text-t-yellow">{challenge.reward_text}</p>
